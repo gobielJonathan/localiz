@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import { app } from "localiz/react";
+import { useTranslation } from "localiz/react";
 
 function App() {
   const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    app();
-  }, []);
+  const { t, i18n } = useTranslation();
 
   return (
     <>
@@ -23,6 +20,9 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
+        <h4>{t("hello", { name: "Jon doe" })}</h4>
+        <button onClick={() => i18n.changeLanguage("en")}>en</button>
+        <button onClick={() => i18n.changeLanguage("es")}>es</button>
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
