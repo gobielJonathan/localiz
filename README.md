@@ -14,6 +14,25 @@ Welcome to the ultimate toolkit for internationalization (i18n) projects! This r
 
 Empower your team to build scalable and maintainable multilingual applications while reducing repetitive tasks and development overhead.
 
+
+### API 
+
+#### i18n Init Function Spec
+
+| Parameter          | Type      | Description                          |
+|--------------------|-----------|--------------------------------------|
+| resources          | Resource  | The resource object for translations |
+| defaultLang        | string    | The default language code            |
+| returnEmptyString? | boolean   | Optional flag to return empty string |
+
+#### LocalizeProvider Spec
+
+| Parameter | Type             | Description                          |
+|-----------|------------------|--------------------------------------|
+| i18n      | I18n             | The i18n instance                    |
+| children  | React.ReactNode  | The child components                 |
+
+
 ### Usage
 
 #### React
@@ -36,7 +55,7 @@ const i18nInstance = i18n().init({
 
 function main() {
     return (
-        <LocalizeProvider i18n={i18nInstance} lang="en">
+        <LocalizeProvider i18n={i18nInstance}>
             <App />
         </LocalizeProvider>
     );
