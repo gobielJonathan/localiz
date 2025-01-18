@@ -39,6 +39,10 @@
     "./react": {
       "import": "./dist/react.js",
       "require": "./dist/react.cjs"
+    },
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "dependencies": {

@@ -1,86 +1,18 @@
-import { createContext, PropsWithChildren, useContext, useMemo } from "react";
-import _get from "lodash.get";
-
-const stringTemplate = (
-  template: string,
-  data: Record<string, string>
-): string => {
-  if (!template) {
-    return "";
-  }
-
-  const pattern = /{{\s*(\w+?)\s*}}/g;
-  return template.replace(pattern, (_, token) => {
-    if (Object.prototype.hasOwnProperty.call(data, token)) {
-      return data[token];
-    }
-    return "";
-  });
-};
-
-type Resource = {
-  [key: string]: Resource | string;
-};
-
-interface i18nValue {
-  language: string;
-  init(config: {
-    resources: Resource;
-    defaultLang: string;
-    // allow an empty value to count as invalid (by default is true)
-    returnEmptyString?: boolean;
-  }): i18nValue;
-  t(key: string, options?: Record<string, string>): string;
-  exists(key: string): boolean;
-  changeLanguage(language: string): void;
-  getDataByLanguage(lang: string): Resource;
-}
-type i18nCreator = () => i18nValue;
-
-export const i18n: i18nCreator = () => {
-  let _language: string = "";
-  let _isReturnEmptyString = true;
-  let _resources: Resource = {};
-
-  return {
-    get language() {
-      return _language;
-    },
-
-    init(config: {
-      resources: Resource;
-      defaultLang: string;
-      // allow an empty value to count as invalid (by default is true)
-      returnEmptyString?: boolean;
-    }) {
-      _resources = config.resources;
-      _language = config.defaultLang;
-      _isReturnEmptyString = config.returnEmptyString ?? true;
-
-      return this;
-    },
-    t(key: string, options?: Record<string, string>) {
-      const translationValue = _get(_resources, `${_language}.${key}`);
-      if (translationValue) {
-        return stringTemplate(String(translationValue), options ?? {});
-      }
-      if (_isReturnEmptyString) return "";
-      return translationValue;
-    },
-    exists(key: string) {
-      return Boolean(_get(_resources, `${_language}.${key}`));
-    },
-    changeLanguage(language: string) {
-      _language = language;
-    },
-    getDataByLanguage(lang: string): Resource {
-      return _resources[lang] as Resource;
-    },
-  };
-};
+import {
+  cloneElement,
+  ComponentProps,
+  ComponentType,
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { i18nValue } from "./index";
 
 interface LocalizeContextValue {
-  i18n: ReturnType<typeof i18n>;
+  i18n: i18nValue;
   t: (key: string, options?: Record<string, string>) => string;
 }
 
@@ -90,7 +22,7 @@ const LocalizeContext = createContext<LocalizeContextValue | undefined>(
 
 interface LocalizeProviderProps {
   lang: string;
-  i18n: ReturnType<typeof i18n>;
+  i18n: i18nValue;
 }
 
 export const LocalizeProvider = ({
@@ -116,9 +48,30 @@ export const LocalizeProvider = ({
 LocalizeProvider.displayName = "LocalizeProvider";
 
 export function useTranslation() {
+  const [, setRerender] = useState(false);
   const context = useContext(LocalizeContext);
+
+  useEffect(() => {
+    function rerender() {
+      setRerender((prev) => !prev);
+    }
+
+    context?.i18n?.on("onlanguagechanged", rerender);
+    return () => context?.i18n?.off("onlanguagechanged", rerender);
+  }, []);
+
   if (!context) {
     throw new Error("useTranslation must be used within a LocalizeProvider");
   }
   return context;
+}
+
+export function withTranslation<T extends ComponentType<any>>(Component: T) {
+  return (props: ComponentProps<T>) => {
+    const context = useTranslation();
+    const element = <Component {...props} />;
+    return cloneElement<
+      ComponentProps<T> & { t: i18nValue["t"]; i18n: i18nValue }
+    >(element, { ...props, t: context.t, i18n: context.i18n });
+  };
 }

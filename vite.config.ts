@@ -13,6 +13,7 @@ export default defineConfig({
     lib: {
       entry: {
         react: path.resolve(__dirname, "packages/react.tsx"),
+        index: path.resolve(__dirname, "packages/index.ts"),
       },
       name: "localiz", // Replace with your library name
       formats: ["es", "cjs"],
