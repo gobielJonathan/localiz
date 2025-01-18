@@ -21,13 +21,11 @@ const LocalizeContext = createContext<LocalizeContextValue | undefined>(
 );
 
 interface LocalizeProviderProps {
-  lang: string;
   i18n: i18nValue;
 }
 
 export const LocalizeProvider = ({
   i18n,
-  lang,
   children,
 }: PropsWithChildren<LocalizeProviderProps>) => {
   const value = useMemo(
@@ -37,8 +35,6 @@ export const LocalizeProvider = ({
     }),
     [i18n]
   );
-
-  i18n.changeLanguage(lang);
   return (
     <LocalizeContext.Provider value={value}>
       {children}
