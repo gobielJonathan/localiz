@@ -28,6 +28,7 @@
     "node": ">=18.17",
     "pnpm": ">=8.6"
   },
+  "readme": "README.md",
   "repository": {
     "url": "https://github.com/gobielJonathan/localiz"
   },
