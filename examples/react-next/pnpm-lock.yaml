@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   localiz:
-    specifier: ^0.2.0
-    version: 0.2.0
+    specifier: ^0.2.1
+    version: 0.2.1
   next:
     specifier: 15.1.6
     version: 15.1.6(react-dom@19.0.0)(react@19.0.0)
@@ -2132,8 +2132,8 @@ packages:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
     dev: true
 
-  /localiz@0.2.0:
-    resolution: {integrity: sha512-n2rm+9lKTHASBg/80yhMTt6+DCeX1qHDwjMPtsV6fxxyUhM4metYYcigmbtE4w1VvMANOs7FgmTHKFqKFi2Eug==}
+  /localiz@0.2.1:
+    resolution: {integrity: sha512-9EUzCxrQa1kLhEX2x4gGYrJWOQOwqPPDzfUFv1ct3qTrtVukYn71jIPbU2Z5FW/RIvuO6R+9p5yCdres4bDYNw==}
     engines: {node: '>=18.17', pnpm: '>=8.6'}
     dependencies:
       lodash.get: 4.4.2

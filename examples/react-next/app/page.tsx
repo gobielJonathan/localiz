@@ -27,10 +27,14 @@ function ToggleLang() {
   const [lang, setLang] = useState("en");
 
   useEffect(() => {
-    i18n.on("onlanguagechanged", () => {
-      console.log("language changed", i18n.language);
+    function updateLang() {
       setLang(i18n.language);
-    });
+    }
+
+    i18n.on("onlanguagechanged", updateLang);
+    return () => {
+      i18n.off("onlanguagechanged", updateLang);
+    };
   }, [i18n]);
 
   const changeLanguage = () => {
