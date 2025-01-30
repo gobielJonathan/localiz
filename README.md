@@ -14,6 +14,24 @@ Welcome to the ultimate toolkit for internationalization (i18n) projects! This r
 
 Empower your team to build scalable and maintainable multilingual applications while reducing repetitive tasks and development overhead.
 
+## Installation
+
+You can install the `localiz` package using your preferred package manager:
+
+### Using npm
+```bash
+npm install localiz
+```
+
+### Using pnpm
+```bash
+pnpm add localiz
+```
+
+### Using yarn
+```bash
+yarn add localiz
+```
 
 ### API 
 
