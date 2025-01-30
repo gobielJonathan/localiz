@@ -52,8 +52,12 @@ export function useTranslation() {
       setRerender((prev) => !prev);
     }
 
-    context?.i18n?.on("onlanguagechanged", rerender);
-    return () => context?.i18n?.off("onlanguagechanged", rerender);
+    if(!context) {
+      return
+    }
+
+    context.i18n.on("onlanguagechanged", rerender);
+    return () => context.i18n.off("onlanguagechanged", rerender);
   }, []);
 
   if (!context) {
