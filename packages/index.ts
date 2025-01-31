@@ -34,7 +34,8 @@ export interface i18nValue {
   t(key: string, options?: Record<string, string>): string;
   exists(key: string): boolean;
   changeLanguage(language: string): void;
-  getDataByLanguage(lang: string): Resource;
+  getResourceByLanguage(lang: string): Resource;
+  getValue(key: string): string;
 }
 type i18nCreator = () => i18nValue;
 type i18nListenerType = "onlanguagechanged";
@@ -99,8 +100,11 @@ export const i18n: i18nCreator = () => {
       _language = language;
       emit("onlanguagechanged");
     },
-    getDataByLanguage(lang: string): Resource {
+    getResourceByLanguage(lang: string): Resource {
       return _resources[lang] as Resource;
+    },
+    getValue(key: string): string {
+      return _get(_resources, `${_language}.${key}`) as string;
     },
   };
 };
