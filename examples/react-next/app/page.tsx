@@ -1,59 +1,14 @@
-"use client";
-
-import { i18n } from "localiz";
-import { LocalizeProvider, useTranslation } from "localiz/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import TextTranlation from "./components/text-translation";
+import ToggleLanguage from "./components/toggle-language";
+import LocalizationWrapper from "./components/localization-wrapper";
+import { cookies } from "next/headers";
 
-const i18nInstance = i18n().init({
-  defaultLang: "en",
-  resources: {
-    en: {
-      hello: "Hello, {{name}}!",
-    },
-    es: {
-      hello: "¡Hola, {{name}}!",
-    },
-  },
-});
-
-function TextTranlation() {
-  const { t } = useTranslation();
-  return <div>{t("hello", { name: "jhon doe" })}</div>;
-}
-
-function ToggleLang() {
-  const { i18n } = useTranslation();
-  const [lang, setLang] = useState("en");
-
-  useEffect(() => {
-    function updateLang() {
-      setLang(i18n.language);
-    }
-
-    i18n.on("onlanguagechanged", updateLang);
-    return () => {
-      i18n.off("onlanguagechanged", updateLang);
-    };
-  }, [i18n]);
-
-  const changeLanguage = () => {
-    i18n.changeLanguage(lang === "en" ? "es" : "en");
-  };
+export default async function Home() {
+  const cookiesStore = await cookies();
 
   return (
-    <button
-      className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-      onClick={changeLanguage}
-    >
-      change to {lang === "en" ? "spanish" : "english"}
-    </button>
-  );
-}
-
-export default function Home() {
-  return (
-    <LocalizeProvider i18n={i18nInstance} lang="en">
+    <LocalizationWrapper defaultLang={cookiesStore.get("i18n")?.value ?? "en"}>
       <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
         <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
           <Image
@@ -100,7 +55,7 @@ export default function Home() {
             >
               Read our docs
             </a>
-            <ToggleLang />
+            <ToggleLanguage />
           </div>
         </main>
 
@@ -152,6 +107,6 @@ export default function Home() {
           </a>
         </footer>
       </div>
-    </LocalizeProvider>
+    </LocalizationWrapper>
   );
 }
