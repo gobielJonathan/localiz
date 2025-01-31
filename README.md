@@ -103,3 +103,55 @@ function App() {
 
 export default App;
 ```
+
+
+#### Vue
+
+```ts
+//in main.ts
+import { i18n } from "localiz";
+import { i18nPlugin } from "localiz/vue";
+
+const i18nInstance = i18n().init({
+  defaultLang: "en",
+  resources: {
+    en: {
+      hello: "Hello, {{name}}!",
+    },
+    es: {
+      hello: "¡Hola, {{name}}!",
+    },
+  },
+});
+
+const app = createApp(App);
+app.use(i18nPlugin, { i18n: i18nInstance });
+
+
+
+//in [file].vue
+<script setup lang="ts">
+import { reactive } from "vue";
+import { useTranslation, useValue } from "localiz/vue";
+
+const { i18n } = useTranslation();
+
+// The options object is optional. If you want to watch the value of options, you must use reactive/ref to pass it to the function.
+const options = reactive({ name: "John Doe" });
+const helloValue = useValue("hello", options);
+
+const onChangeLanguage = () => {
+  i18n.changeLanguage(i18n.language === "en" ? "es" : "en");
+};
+
+const onChangeName = () => {
+  options.name = options.name === "jane doe" ? "jhon doe" : "jane doe";
+};
+</script>
+
+<template>
+  <p>{{ helloValue }}</p>
+  <button @click="onChangeLanguage">change language</button>
+  <button @click="onChangeName">change name</button>
+</template>
+```

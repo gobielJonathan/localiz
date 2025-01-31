@@ -12,6 +12,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc && vite build --c vite.config.ts -w",
+    "publish" : "tsc && vite build --c vite.config.ts && npm publish --access public",
     "release:major": "changelog -M",
     "release:minor": "changelog -m",
     "release:patch": "changelog -p"
