@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   localiz:
-    specifier: ^0.2.2
-    version: link:../..
+    specifier: ^0.3.0
+    version: 0.3.0
   vue:
     specifier: ^3.5.13
     version: 3.5.13(typescript@5.6.2)
@@ -635,6 +635,18 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
     dev: true
+
+  /localiz@0.3.0:
+    resolution: {integrity: sha512-Br6aDP4PPOJXrLonwBhVUycCE0KfSALJhwqpq6MzfoHFSFwdLpBLg7qmHIWJ8GiXRqc8soI7+3w/ar43FXVI7w==}
+    engines: {node: '>=18.17', pnpm: '>=8.6'}
+    dependencies:
+      lodash.get: 4.4.2
+    dev: false
+
+  /lodash.get@4.4.2:
+    resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
+    dev: false
 
   /magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
