@@ -3,25 +3,12 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 
-import { LocalizeProvider } from "localiz/react";
-import { i18n } from "localiz";
-
-const i18nInstance = i18n().init({
-  defaultLang: "en",
-  resources: {
-    en: {
-      hello: "Hello, {{name}}!",
-    },
-    es: {
-      hello: "¡Hola, {{name}}!",
-    },
-  },
-});
+import LocalizationWrapper from "./components/localization-wrapper.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <LocalizeProvider i18n={i18nInstance} lang="en">
+    <LocalizationWrapper>
       <App />
-    </LocalizeProvider>
+    </LocalizationWrapper>
   </StrictMode>
 );

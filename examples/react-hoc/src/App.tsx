@@ -15,7 +15,19 @@ interface State {
 }
 
 class App extends Component<Props, State> {
-  state: Readonly<State> = {count: 0}
+  state: Readonly<State> = { count: 0 };
+
+  storeLang = () => {
+    localStorage.setItem("i18n", this.props.i18n?.language || "en");
+  };
+
+  componentDidMount(): void {
+    this.props.i18n?.on("onlanguagechanged", this.storeLang);
+  }
+
+  componentWillUnmount(): void {
+    this.props.i18n?.off("onlanguagechanged", this.storeLang);
+  }
 
   render() {
     return (
@@ -29,11 +41,14 @@ class App extends Component<Props, State> {
           </a>
         </div>
         <h1>Vite + React</h1>
-        <p>text : {this.props.t?.("hello", {name : "Jhon doe"})}</p>
+        <p>text : {this.props.t?.("hello", { name: "Jhon doe" })}</p>
         <div className="card">
-
-          <button onClick={() => this.props.i18n?.changeLanguage("en")}>en</button>
-          <button onClick={() => this.props.i18n?.changeLanguage("es")}>es</button>
+          <button onClick={() => this.props.i18n?.changeLanguage("en")}>
+            en
+          </button>
+          <button onClick={() => this.props.i18n?.changeLanguage("es")}>
+            es
+          </button>
 
           <button
             onClick={() =>

@@ -1,8 +1,9 @@
 import Image from "next/image";
+import { cookies } from "next/headers";
+
 import TextTranlation from "./components/text-translation";
 import ToggleLanguage from "./components/toggle-language";
 import LocalizationWrapper from "./components/localization-wrapper";
-import { cookies } from "next/headers";
 
 export default async function Home() {
   const cookiesStore = await cookies();
